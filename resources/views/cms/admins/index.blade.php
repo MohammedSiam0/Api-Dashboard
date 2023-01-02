@@ -3,8 +3,8 @@
 @extends('cms.parent')
 
  
-@section('sub-name', __('cms.permissions'))
-@section('large-name', __('cms.permissions') )
+@section('sub-name', __('cms.admins'))
+@section('large-name', __('cms.admins') )
 @section('home-name', __('cms.index'))   
 
 @section('style')
@@ -20,7 +20,7 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">{{ __('cms.permissions')}}</h3>
+              <h3 class="card-title">{{ __('cms.admins')}}</h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -29,9 +29,9 @@
                   <tr>
                     <th style="width: 10px">#</th>
                     <th>{{__('cms.name')}}</th>
-                    <th>{{ __('cms.guard')}}</th>
-                  
-                    <th>{{ __('cms.created_at')}}</th>
+                    <th>{{ __('cms.email')}}</th>
+                    <th>{{ __('cms.roles')}}</th>
+                     <th>{{ __('cms.created_at')}}</th>
                     <th>{{ __('cms.updated_at' )}}</th>
                 
 
@@ -39,26 +39,29 @@
                   </tr>
                 </thead>
                 <tbody>
-              @foreach ($permissions as $permission)
+              @foreach ($admins as $admin)
               <tr>
-                <td>{{$permission->id}}</td>
-                <td>{{$permission->name}}</td>
+                <td>{{$admin->id}}</td>
+                <td>{{$admin->name}}</td>
                 <td>
-                  {{$permission->guard_name}}
+                  {{$admin->email}}
+                </td> 
+                <td>
+                  {{$admin->roles[0]->name}}
                 </td>
-            
-                <td> {{$permission->created_at}} </td>
-                <td>  {{$permission->updated_at}}</td>
+                  <td> {{$admin->created_at}} </td>
+                <td>  {{$admin->updated_at}}</td>
+       
  
               <td>
                   <div class="btn-group">
                                           {{--  هاي هي الطريقة لي بنمرر فيها الايدي عن طريق دالة اليديت   --}}
                    {{-- للانتقال بين الصفحات نستخدم a href --}}
-                    <a href="{{route('permissions.edit',$permission->id)}}" class="btn btn-success btn-flat">
+                    <a href="{{route('admins.edit',$admin->id)}}" class="btn btn-success btn-flat">
                       <i class="fas fa-edit"></i>
                     </a>
                                     {{-- تعود كلمة ذس الي تحديد مكان الصف علشان حنحدف بناءا على اقرب اشي الها فهوا ال التي ار تبع الصف   --}}
-                    <a  onclick="confermDelete('{{$permission->id}}',this)" class="btn btn-danger btn-flat">
+                    <a  onclick="confermDelete('{{$admin->id}}',this)" class="btn btn-danger btn-flat">
                       <i class="fas fa-trash"></i>
                     </a>
                   </div>
@@ -111,7 +114,7 @@
 
 <script>
   function performDelete(id,reference) {
-       axios.delete('/cms/admin/permissions/'+id )
+       axios.delete('/cms/admin/users/'+id )
            .then(function (response) {
                //2xx
                 console.log(response);

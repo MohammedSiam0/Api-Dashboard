@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\PermissionController;
@@ -25,9 +26,16 @@ Route::get('/', function () {
 //Route::view('/','cms.temp');
 
 Route::prefix('cms/admin')->middleware('auth:admin')->group(function () {
-    Route::resource('permission',PermissionController::class);
+    Route::resource('permission',PermissionController::class);  
     Route::resource('role',RoleController::class);
+    Route::resource('admins',AdminController::class);
+// هاي الدالة اعملناها كاملة علشان نعطي الرول صلاحيات 
+Route::post('role/update-permission',[RoleController::class, 'updateRolePermission']);
  });
+
+
+
+
 // prifixe  بتساعدد علي تجيمع الروابط في بداية موحدة  مثال 
 /*
  * cms/admin/mohammed

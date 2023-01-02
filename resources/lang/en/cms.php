@@ -11,6 +11,8 @@ return [
  // auther
 'create_cities' => 'Create Cities', 
 'update_cities' => 'Update Cities', 
+'update_admins' => 'Update Cities', 
+'create_admins' => 'Create Roles', 
 'create_roles' => 'Create Roles', 
 'update_roles' => 'Update Roles', 
 'create_users' => 'Create Users', 
@@ -19,6 +21,7 @@ return [
 // Table
 'cities' => 'Cities', 
 'users' => 'Users', 
+'admins' => 'Admins', 
 
 // Menu 
 'contect_management' => 'Contect Management', 
@@ -39,6 +42,8 @@ return [
 'created_at' =>  ' Created At', 
 'updated_at' =>  ' Updated At', 
 'created_successfully' =>  'Created Successfully', 
+'assign_permissions' =>  'Role Permission', 
+'assigned' =>  'Assigned', 
 'create_failed' =>  'Create Failed !', 
 // Botton
 'save' =>  ' Save', 

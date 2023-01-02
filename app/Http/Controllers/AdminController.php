@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
+use Symfony\Component\HttpFoundation\Response;
 
 class AdminController extends Controller
 {
@@ -14,6 +17,9 @@ class AdminController extends Controller
      */
     public function index()
     {
+     
+     $admins = Admin::all();
+     return response()->view('cms.admins.index',['admins'=>$admins]);
         //
     }
 
@@ -24,7 +30,9 @@ class AdminController extends Controller
      */
     public function create()
     {
-        //
+        $roles =Role::where('guard_name','=','admin')->get();
+        return response()->view('cms.admins.create',['roles'=>$roles]);
+        
     }
 
     /**
@@ -35,7 +43,29 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         //
+         $valedator = Validator($request->all(),[
+            'name' => 'required|string|min:3|max:100',
+            // unique:users,email  تعني انه فريد في جدول اليوزر , تحت مسمى كولم ايميل 
+            'email_address' => 'required|email|unique:users,email',
+            'role_id' => 'required|numeric|exists:roles,id',
+        ]);
+        if(!$valedator->fails()){
+            $admin =new Admin();
+            $admin->name = $request->input('name');
+            $admin->email = $request->input('email_address');
+            $admin->password = Hash::make(12345);
+            $isSaved = $admin->save();
+            if($isSaved){
+                $admin->assignRole(Role::findById($request->input('role_id'),'admin'));
+            }
+            return response()->json(
+                ['message' => $isSaved ? __('Created Successfully') : __('Create Failed!')],
+                $isSaved ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST,
+            );
+        }else{
+            return response()->json(['message'=>$valedator->getMessageBag()->first()],Response::HTTP_BAD_REQUEST);
+        }
     }
 
     /**

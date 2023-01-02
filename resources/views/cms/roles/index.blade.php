@@ -30,6 +30,7 @@
                     <th style="width: 10px">#</th>
                     <th>{{__('cms.name')}}</th>
                     <th>{{ __('cms.guard')}}</th>
+                    <th>{{ __('cms.permissions')}}</th>
                     <th>{{ __('cms.created_at')}}</th>
                     <th>{{ __('cms.updated_at' )}}</th>
                 
@@ -45,6 +46,12 @@
                 <td>
                   {{$role->guard_name}}
                 </td>
+                <td>
+                  <a class="btn btn-app bg-info" href="{{route('roles.show',$role->id)}}">
+                    <span class="badge bg-danger">{{$role->permissions_count}}</span>
+                    <i class="fas fa-heart"></i> {{__('cms.permissions')}}
+                  </a>
+                  </td>
                 <td> {{$role->created_at}} </td>
                 <td>  {{$role->updated_at}}</td>
  

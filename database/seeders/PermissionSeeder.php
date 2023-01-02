@@ -40,7 +40,7 @@ class PermissionSeeder extends Seeder
 
         //***********************Users Permission***************/
 
-            // على سبيل التمثيل بس حعطي اليوزر صلاحيتان
+            // ع  لى سبيل التمثيل بس حعطي اليوزر صلاحيتان
        Permission::create(['name'=>'Read-Cities','guard_name'=>'web']);
        Permission::create(['name'=>'Read-Users','guard_name'=>'web']);
      
