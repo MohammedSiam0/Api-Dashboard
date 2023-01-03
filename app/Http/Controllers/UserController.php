@@ -12,6 +12,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
+    public function __construct(){
+     
+        $this->authorizeResource(User::class,'user');
+    }
     // for run create this file with model User 
     // php artisan make:controller UserController --model=User
 
@@ -23,12 +27,12 @@ class UserController extends Controller
      */
     public function index()
     {
-        // $users = User::all();
+         //$users = User::all();
         // المدينة في جدول ثاني , ف بنقدر نجيبها عن طريق الايدي الي  مع المستخدم , ف هلوقت بنقوله هاتلي المدينة مع المستخدم 
                             // كلمة ستي  هي اسم الفنكشن الي معرفة في مودل اليوزر city
      // الطريقة الي فوق الي بتجيب الكل بتزبط بس الصح نعمل العملية هنا مش في البليد وانتهى
-       $users = User::with('city')->get();
-        return response()->view('cms.users.index',['users'=> $users]);
+     $users = User::with('city')->get();
+     return response()->view('cms.users.index',['users'=> $users]);
     }
 
     /**

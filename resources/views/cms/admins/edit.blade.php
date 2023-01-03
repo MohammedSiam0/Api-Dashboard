@@ -1,7 +1,7 @@
 @extends('cms.parent')
 
  
-@section('sub-name',__('cms.users'))
+@section('sub-name',__('cms.admins'))
 @section('large-name',__('cms.update'))
 @section('home-name',__('cms.update'))   
 
@@ -28,12 +28,12 @@
             <div class="card-body">
 
             <div class="form-group">
-              <label for="city_id">{{__('cms.users')}}</label>
-              <select class="custom-select" id="city_id">
-              @foreach($cities as $city)
-           <option value="{{$city->id}}" @if ($city->cityid == $city->id) selected
+              <label for="role_id">{{__('cms.roles')}}</label>
+              <select class="custom-select" id="role_id">
+              @foreach($roles as $role)
+           <option value="{{$role->id}}" @if ($role->id == $adminRole->id) selected
                
-           @endif>{{$city->name_en}}</option>  
+           @endif>{{$role->name}}</option>  
                
                 @endforeach
               
@@ -42,11 +42,11 @@
 
             <div class="form-group">
               <label for="{{__('cms.name')}}">{{__('cms.name')}}</label>
-              <input type="text" class="form-control" id="name" placeholder="{{__('cms.enter_name')}}"  value="{{$user->email}}"   >
+              <input type="text" class="form-control" id="name" placeholder="{{__('cms.enter_name')}}"  value="{{$admin->name}}"   >
             </div>
             <div class="form-group">
               <label for="{{__('cms.email')}}">{{__('cms.email')}}</label>
-              <input type="email" class="form-control" id="email" placeholder="{{__('cms.enter_email')}}" value="{{$user->email}}" >
+              <input type="email" class="form-control" id="email" placeholder="{{__('cms.enter_email')}}" value="{{$admin->email}}" >
             </div>
             </div>
           
@@ -73,10 +73,10 @@
 <script>
   function performUpdate() {
     // طريق ثانية لتمرير الايدي بس كل وحدة حسب واصل او لاء 
-  axios.put('/cms/admin/users/{{$user->id}}', {
+  axios.put('/cms/admin/admins/{{$admin->id}}', {
       name: document.getElementById('name').value,
       email_address: document.getElementById('email').value,
-      city_id: document.getElementById('city_id').value,
+      role_id: document.getElementById('role_id').value,
      
   })
       .then(function (response) {
@@ -84,7 +84,7 @@
            console.log(response);
           toastr.success(response.data.message);
           // بعد الحفظ يرجعنى على صفحة معينة 
-          window.location.href = '/cms/admin/users'
+          window.location.href = '/cms/admin/admins'
       })
       .catch(function (error) {
           //4xx - 5xx

@@ -220,7 +220,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </li>
             </ul>
           </li>
+          
+          @canany(['Create-Role', 'Read-Roles','Create-permission', 'Read-permissions'])
         <li class="nav-header">{{__('cms.role_permission')}} </li>
+        @canany(['Create-Role', 'Read-Roles'])
         <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-bars"></i>
@@ -229,23 +232,29 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <i class="fas fa-angle-left right"></i>
             </p>
           </a>
+             
             <ul class="nav nav-treeview">
+              @canany('Read-Roles')
             <li class="nav-item">
               <a href="{{route('roles.index')}}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>{{__('cms.index')}}</p>
               </a>
             </li>
+            @endcanany
+            @canany('Create-Role')
             <li class="nav-item">
               <a href="{{route('roles.create')}}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p> {{__('cms.create')}}</p>
               </a>
             </li>
-            
+                @endcanany
          
           </ul>  
         </li>
+        @endcanany 
+        @canany(['Create-Permission', 'Read-Permissions'])
         <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-bars"></i>
@@ -255,22 +264,28 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </p>
           </a>
            <ul class="nav nav-treeview">
+            @canany('Read-Permissions')
             <li class="nav-item">
               <a href="{{route('permissions.index')}}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>{{__('cms.index')}}</p>
               </a>
             </li>
+            @endcanany 
+            @canany('Create-Permission')
             <li class="nav-item">
               <a href="{{route('permissions.create')}}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p> {{__('cms.create')}}</p>
               </a>
             </li>
-            
+            @endcanany 
          
           </ul>  
         </li>
+        @endcanany 
+        @endcanany 
+        @canany(['Create-City', 'Read-Cities',])
         <li class="nav-header">{{__('cms.contect_management')}} </li>
         <li class="nav-item">
           <a href="#" class="nav-link">
@@ -281,22 +296,28 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </p>
           </a>
           <ul class="nav nav-treeview">
+            @canany('Read-Cities')
             <li class="nav-item">
               <a href="{{route('cities.index')}}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>{{__('cms.index')}}</p>
               </a>
             </li>
+            @endcanany
+            @canany('Create-City')
             <li class="nav-item">
               <a href="{{route('cities.create')}}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p> {{__('cms.create')}}</p>
               </a>
             </li>
-            
+            @endcanany
          
           </ul>
         </li>
+        @endcanany 
+
+        @canany(['Create-User', 'Read-Users','Create-Admin', 'Read-Admins'])
         <li class="nav-header">{{__('cms.humerus_resourcing')}} </li>
         <li class="nav-item">
           <a href="#" class="nav-link">
@@ -307,19 +328,24 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </p>
           </a>
           <ul class="nav nav-treeview">
+            @canany('Read-Users')
             <li class="nav-item">
               <a href="{{route('users.index')}}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>{{__('cms.index')}}</p>
               </a>
             </li>
+            @endcanany 
+
+            @canany('Create-User')
             <li class="nav-item">
               <a href="{{route('users.create')}}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p> {{__('cms.create')}}</p>
               </a>
             </li>
-            
+            @endcanany 
+
          
           </ul>
         </li>
@@ -332,22 +358,30 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </p>
           </a>
           <ul class="nav nav-treeview">
+            
+            @canany('Read-Admins')
             <li class="nav-item">
               <a href="{{route('admins.index')}}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>{{__('cms.index')}}</p>
               </a>
             </li>
+            @endcanany 
+
+            @canany('Create-Admin')
             <li class="nav-item">
               <a href="{{route('admins.create')}}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p> {{__('cms.create')}}</p>
               </a>
             </li>
-            
+            @endcanany 
+
          
           </ul>
         </li>
+        @endcanany 
+        <hr/>
         <li class="nav-item">
           <a href="{{route('cms.logout')}}" class="nav-link">
             <i class="nav-icon far fa-circle text-danger"></i>

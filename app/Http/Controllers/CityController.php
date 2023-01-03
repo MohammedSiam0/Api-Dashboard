@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class CityController extends Controller
 {
+
+    // public function __construct(){
+     
+    //     $this->authorizeResource(City::class,'city');
+    // }
     /**
      * Display a listing of the resource.
      *
@@ -14,6 +19,9 @@ class CityController extends Controller
      */
     public function index()
     {
+// لو بدي اعمل صلاحيات علشان ما حدا يفوت عن طريق الرابط بس بشكل يدوي مش عن طريق الكنسترككتور الي فوق 
+$this->authorize('viewAny',City::class);
+
         // جيبلي كل ابيانات الي في جودل ال city 
         $cities =City::all();
          // cms.cities.indexخد البيانات وديهم على صفحة ال   
@@ -28,7 +36,7 @@ class CityController extends Controller
      */
     public function create()
     {
-        //
+        $this->authorize('create',City::class);
         return response()->view('cms.cities.create');
     }
 
@@ -40,6 +48,7 @@ class CityController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create',City::class);
 
         $request->validate([
                 'name_en' => 'required|string|min:3|max:50',
@@ -77,7 +86,9 @@ class CityController extends Controller
      */
     public function show(City $city)
     {
-        //
+        $this->authorize('view',$city);
+    
+
     }
 
     /**
@@ -88,6 +99,7 @@ class CityController extends Controller
      */
     public function edit(City $city)
     {
+        $this->authorize('update',$city);
          return response()->view('cms.cities.update',['city'=>$city]);
         //  cms/admin/cities/{city}/edit
     }
@@ -101,6 +113,7 @@ class CityController extends Controller
      */
     public function update(Request $request, City $city)
     {
+        $this->authorize('update',$city);
         $request->validate([
             'name_en' => 'required|string|min:3|max:50',
             'name_ar' => 'required|string|min:3|max:50',
@@ -136,6 +149,7 @@ class CityController extends Controller
      */
     public function destroy(City $city)
     {
+        $this->authorize('delete',$city);
          $isDeleted =$city->delete();
          return redirect()->back();
     }

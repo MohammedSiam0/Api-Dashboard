@@ -46,7 +46,7 @@
                 <td>
                   {{$user->email}}
                 </td>
-                <td> {{$user->city->name_en}} </td>
+                <td> {{$user->city->name_en ?? null}} </td>
                  <td> {{$user->created_at}} </td>
                 <td>  {{$user->updated_at}}</td>
        
@@ -55,13 +55,17 @@
                   <div class="btn-group">
                                           {{--  هاي هي الطريقة لي بنمرر فيها الايدي عن طريق دالة اليديت   --}}
                    {{-- للانتقال بين الصفحات نستخدم a href --}}
-                    <a href="{{route('users.edit',$user->id)}}" class="btn btn-success btn-flat">
+                   @can('Update-User')
+                   <a href="{{route('users.edit',$user->id)}}" class="btn btn-success btn-flat">
                       <i class="fas fa-edit"></i>
                     </a>
+                    @endcan
+                    @can('Delete-User')
                                     {{-- تعود كلمة ذس الي تحديد مكان الصف علشان حنحدف بناءا على اقرب اشي الها فهوا ال التي ار تبع الصف   --}}
                     <a  onclick="confermDelete('{{$user->id}}',this)" class="btn btn-danger btn-flat">
                       <i class="fas fa-trash"></i>
                     </a>
+                    @endcan
                   </div>
                 </td>  
               </tr>

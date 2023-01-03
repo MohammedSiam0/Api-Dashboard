@@ -9,6 +9,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PermissionController extends Controller
 {
+    public function __construct(){
+     
+        $this->authorizeResource(Permission::class,'permission');
+    }
     /**
      * Display a listing of the resource.
      *

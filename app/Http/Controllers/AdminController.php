@@ -10,6 +10,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AdminController extends Controller
 {
+
+
+    public function __construct(){
+     
+        $this->authorizeResource(Admin::class,'admin');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -47,7 +53,7 @@ class AdminController extends Controller
          $valedator = Validator($request->all(),[
             'name' => 'required|string|min:3|max:100',
             // unique:users,email  تعني انه فريد في جدول اليوزر , تحت مسمى كولم ايميل 
-            'email_address' => 'required|email|unique:users,email',
+            'email_address' => 'required|email|unique:admins,email',
             'role_id' => 'required|numeric|exists:roles,id',
         ]);
         if(!$valedator->fails()){
@@ -88,6 +94,13 @@ class AdminController extends Controller
     public function edit(Admin $admin)
     {
         //
+        $roles = Role::where('guard_name','=','admin')->get();
+        $adminRole = $admin->roles()->first();
+        return response()->view('cms.admins.edit',[
+            'admin' =>$admin,
+            'adminRole'=> $adminRole ,
+            'roles'=> $roles,
+        ]);
     }
 
     /**
@@ -99,7 +112,31 @@ class AdminController extends Controller
      */
     public function update(Request $request, Admin $admin)
     {
-        //
+         //
+         $valedator = Validator($request->all(),[
+            'name' => 'required|string|min:3|max:100',
+            // unique:users,email  تعني انه فريد في جدول اليوزر , تحت مسمى كولم ايميل 
+            'email_address' => 'required|email|unique:admins,email,'.$admin->id,
+            'role_id' => 'required|numeric|exists:roles,id',
+        ]);
+
+ 
+
+        if(!$valedator->fails()){
+             $admin->name = $request->input('name');
+            $admin->email = $request->input('email_address');
+            $admin->password = Hash::make(12345);
+            $isSaved = $admin->save();
+            if($isSaved){
+                $admin->syncRoles(Role::findById($request->input('role_id'),'admin'));
+            }
+            return response()->json(
+                ['message' => $isSaved ? __('Update Successfully') : __('Update Failed!')],
+                $isSaved ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST,
+            );
+        }else{
+            return response()->json(['message'=>$valedator->getMessageBag()->first()],Response::HTTP_BAD_REQUEST);
+        }
     }
 
     /**
@@ -110,6 +147,9 @@ class AdminController extends Controller
      */
     public function destroy(Admin $admin)
     {
-        //
+        $isDeleted =$admin->delete();
+        return response()->json(['message' => $isDeleted ? 'Delete Successfully' :'Delete Failed!'],
+        $isDeleted ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST
+    );
     }
 }
