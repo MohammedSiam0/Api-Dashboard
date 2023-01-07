@@ -20,13 +20,31 @@ class CityController extends Controller
     public function index()
     {
 // لو بدي اعمل صلاحيات علشان ما حدا يفوت عن طريق الرابط بس بشكل يدوي مش عن طريق الكنسترككتور الي فوق 
-$this->authorize('viewAny',City::class);
+//$this->authorize('viewAny',City::class);
 
+        // // جيبلي كل ابيانات الي في جودل ال city 
+        // $cities =City::all();
+        //  // cms.cities.indexخد البيانات وديهم على صفحة ال   
+        //  // cities تحت مسمى ال 
+        // return response()->view('cms.cities.index',['cities'=> $cities]);
+
+        if(auth('user-api')->check()){
+            $cities =City::all();
+            return response()->json([
+                'status'=>true,
+                'message' => 'Success',
+                'data'=>$cities
+            ]);
+        }else{
+            
         // جيبلي كل ابيانات الي في جودل ال city 
         $cities =City::all();
-         // cms.cities.indexخد البيانات وديهم على صفحة ال   
-         // cities تحت مسمى ال 
-        return response()->view('cms.cities.index',['cities'=> $cities]);
+        // cms.cities.indexخد البيانات وديهم على صفحة ال   
+        // cities تحت مسمى ال 
+       return response()->view('cms.cities.index',['cities'=> $cities]);
+        }
+
+
     }
 
     /**
