@@ -33,7 +33,7 @@
               @foreach($roles as $role)
            <option value="{{$role->id}}" @if ($role->id == $adminRole->id) selected
                
-           @endif>{{$role->name}}</option>  
+           @endif >{{$role->name}}</option>  
                
                 @endforeach
               

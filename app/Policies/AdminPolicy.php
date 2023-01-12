@@ -53,7 +53,7 @@ class AdminPolicy
      * @param  \App\Models\Admin  $admin
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(Admin $admin, Admin $adminObject)
+    public function update( $admin, Admin $adminObject)
     {
         return $admin->hasPermissionTo('Update-Admin') ? $this->allow() : $this->deny();
 

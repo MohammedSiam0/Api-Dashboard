@@ -67,6 +67,7 @@ class PermissionPolicy
      * @param  \App\Models\Permission  $permission
      * @return \Illuminate\Auth\Access\Response|bool
      */
+    
     public function delete(Admin $admin, Permission $permission)
     {
         return $admin->hasPermissionTo('Delete-Admin') ? $this->allow() : $this->deny();

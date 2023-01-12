@@ -45,7 +45,7 @@
                 <td>
                   {{$city->name_ar}}
                 </td>
-                {{-- <td><span class="badge @if($city->active) bg-success @else bg-danger @endif">@if($city->active)Active @else InActive @endif</span></td> --}}
+               {{-- <td><span class="badge @if($city->active) bg-success @else bg-danger @endif">@if($city->active)Active @else InActive @endif</span></td>   --}}
                                                                                                 {{-- اسم الجدول الحقل الاساسي هوا أكتف بس علشان بدي اعمل شرط ف رحت على المودل اعملت فنكشن وبيتم استدعائها بهاي الطريقة المكتوبة  --}}
                 <td> {{$city->created_at}} </td>
                 <td>  {{$city->updated_at}}</td>

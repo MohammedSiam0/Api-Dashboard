@@ -62,6 +62,8 @@ class UserController extends Controller
             // unique:users,email  تعني انه فريد في جدول اليوزر , تحت مسمى كولم ايميل 
             'email_address' => 'required|email|unique:users,email',
             'city_id' => 'required|numeric|exists:cities,id',
+            // طريقة تحديد كم رقم تريد , موجودة في بوست مان تبع  سمارت ستور
+          //  required|numeric|digits:9
         ]);
         if(!$valedator->fails()){
             $user =new User();

@@ -10,10 +10,10 @@ use Spatie\Permission\Models\Role ;
 
 class RoleController extends Controller
 {
-    public function __construct(){
+    // public function __construct(){
      
-        $this->authorizeResource(Role::class,'role');
-    }
+    //     $this->authorizeResource(Role::class,'role');
+    // }
     /**
      * Display a listing of the resource.
      *

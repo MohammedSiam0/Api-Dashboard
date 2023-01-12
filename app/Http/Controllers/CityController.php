@@ -8,10 +8,12 @@ use Illuminate\Http\Request;
 class CityController extends Controller
 {
 
-    // public function __construct(){
-     
+    //   public function __construct(){
+
     //     $this->authorizeResource(City::class,'city');
-    // }
+
+    //   }
+
     /**
      * Display a listing of the resource.
      *
@@ -19,26 +21,26 @@ class CityController extends Controller
      */
     public function index()
     {
-// لو بدي اعمل صلاحيات علشان ما حدا يفوت عن طريق الرابط بس بشكل يدوي مش عن طريق الكنسترككتور الي فوق 
-//$this->authorize('viewAny',City::class);
 
-        // // جيبلي كل ابيانات الي في جودل ال city 
-        // $cities =City::all();
-        //  // cms.cities.indexخد البيانات وديهم على صفحة ال   
-        //  // cities تحت مسمى ال 
-        // return response()->view('cms.cities.index',['cities'=> $cities]);
+        // لو بدي اعمل صلاحيات علشان ما حدا يفوت عن طريق الرابط بس بشكل يدوي مش عن طريق الكنسترككتور الي فوق 
+        //$this->authorize('viewAny',City::class);
 
-        if(auth('user-api')->check()){
+            //  جيبلي كل ابيانات الي في جودل ال city 
+            //  $cities = City::all();
+            //  cms.cities.indexخد البيانات وديهم على صفحة ال   
+            //  cities تحت مسمى ال 
+            //  return response()->view('cms.cities.index',['cities'=> $cities]);
+            
+            // جيبلي كل ابيانات الي في جودل ال city 
             $cities =City::all();
+        if(auth('user-api')->check()){
+         
             return response()->json([
                 'status'=>true,
                 'message' => 'Success',
                 'data'=>$cities
             ]);
         }else{
-            
-        // جيبلي كل ابيانات الي في جودل ال city 
-        $cities =City::all();
         // cms.cities.indexخد البيانات وديهم على صفحة ال   
         // cities تحت مسمى ال 
        return response()->view('cms.cities.index',['cities'=> $cities]);
@@ -52,10 +54,13 @@ class CityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function create()
     {
+
         $this->authorize('create',City::class);
         return response()->view('cms.cities.create');
+        
     }
 
     /**
@@ -66,7 +71,7 @@ class CityController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize('create',City::class);
+      
 
         $request->validate([
                 'name_en' => 'required|string|min:3|max:50',
@@ -78,22 +83,40 @@ class CityController extends Controller
             'name_en.required'=>'Enter City english name',
             'name_ar.min'=>'City name must be at least 3 characters',
         ]);
-        $city =new City();
-        $city->name_en = $request->input('name_en');
-        $city->name_ar = $request->input('name_ar');
-        $city->active = $request->has('active');
-        $isSaved =$city->save();
-        if($isSaved){
 
-            // هذا السشن علشان احمل معي متغير برسالة  الفلاش علشان يتم استخدامها مرة فقط 
-              session()->flash('message','City Created succsesfully');
-            // هذا بخليني اذا تم الحفظ يحولني على صفحة العرض 
-           // return redirect()->route('cities.index');
-            // اول ما تخلص اطبعلي الرسالة وارجع لنفس الصفحة 
-          return redirect()->back();
+        if(auth('user-api')->check()){
+         //   $this->authorize('create',City::class);
+           // $cities = City::create($request->all());
+           $city =new City();
+           $city->name_en = $request->input('name_en');
+           $city->name_ar = $request->input('name_ar');
+           $city->active = $request->has('active');
+           $city->save();
+            return response()->json([
+                'status' => true,
+                'message' => "City Created successfully!",
+                "data" => $city
+            ], 200);
         }else{
-            return redirect()->back();
-        }
+              $this->authorize('create',City::class);
+            $city =new City();
+            $city->name_en = $request->input('name_en');
+            $city->name_ar = $request->input('name_ar');
+            $city->active = $request->has('active');
+            $isSaved =$city->save();
+            if($isSaved){
+    
+                // هذا السشن علشان احمل معي متغير برسالة  الفلاش علشان يتم استخدامها مرة فقط 
+                  session()->flash('message','City Created succsesfully');
+                // هذا بخليني اذا تم الحفظ يحولني على صفحة العرض 
+               // return redirect()->route('cities.index');
+                // اول ما تخلص اطبعلي الرسالة وارجع لنفس الصفحة 
+              return redirect()->back();
+            }else{
+                return redirect()->back();
+            }
+         }
+        
     }
 
     /**
@@ -138,14 +161,18 @@ class CityController extends Controller
             'active' => 'nullable|string|in:on',
     ]
      );
-     ///  تعلم استخراج api  
-    //  $city->update($request->all());
 
-    //     return [
-    //         "status" => 1,
-    //         "data" => $city,
-    //         "msg" => "Blog updated successfully"
-    //     ];
+    
+    if(auth('user-api')->check()){
+      ///  تعلم استخراج api  
+     $city->update($request->all());
+
+        return [
+            "status" => 1,
+            "data" => $city,
+            "msg" => "city updated successfully"
+        ];
+    }else {
     $city->name_en = $request->input('name_en');
     $city->name_ar = $request->input('name_ar');
     $city->active = $request->has('active');
@@ -156,6 +183,7 @@ class CityController extends Controller
     
     }else{
         return redirect()->back();
+    }
     }
     }
 

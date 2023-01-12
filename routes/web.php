@@ -55,7 +55,8 @@ Route::prefix('cms/admin')->middleware('auth:web,admin')->group(function () {
 //  Route::post('login',[AuthController::class,'login']);
 //  });
 Route::prefix('cms')->middleware('guest:web,admin')->group(function(){
-    Route::get('{guard}/login',[AuthController::class,'showLogin'])->name('cms.login');
+    Route::get('{guard}/login',[AuthController::class,'showLogin']);
+    Route::get('web/login',[AuthController::class,'showLogin'])->name('cms.login');
      Route::post('login',[AuthController::class,'login']);
      });
      

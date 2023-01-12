@@ -42,7 +42,7 @@ class UserPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function create(User $user)
+    public function create( $user)
     {
         $guard =auth('admin')->check() ? 'admin' : 'web';
         return auth($guard)->user()->hasPermissionTo('Create-User') ? $this->allow() :$this->deny();
@@ -56,7 +56,7 @@ class UserPolicy
      * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, User $model)
+    public function update( $user, User $model)
     {
         $guard =auth('admin')->check() ? 'admin' : 'web';
         return auth($guard)->user()->hasPermissionTo('Update-User') ? $this->allow() :$this->deny();
@@ -70,7 +70,7 @@ class UserPolicy
      * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, User $model)
+    public function delete( $user, User $model)
     {
         $guard =auth('admin')->check() ? 'admin' : 'web';
         return auth($guard)->user()->hasPermissionTo('Delete-User') ? $this->allow() :$this->deny();

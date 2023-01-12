@@ -37,7 +37,7 @@ class ApiAuthController extends Controller
                 return response()->json(['message'=>'Logged in Successfully','data'=>$user],Response::HTTP_OK);
                         /// ملاحظة علشان نقلل وقت التوكن عشان يصير توكن ملوش لازمة بنروح على المسار التالي بروفايدر اوث سيرفس بروفايدر
             }else{
-                            return response()->json(['message'=>'Login failed , wrong cresentials'],Response::HTTP_BAD_REQUEST);
+                return response()->json(['message' => 'Login failed , wrong cresentials'], Response::HTTP_BAD_REQUEST);
                         }
                     }else{
                 return response()->json(['message'=> $valedator->getMessageBag()->first()],Response::HTTP_BAD_REQUEST);
@@ -91,6 +91,10 @@ private function generatePgctToken(Request $request){
     //throw $th;
   }
 }
+
+
+
+
 
 // دالة لتجعل المستخدم يسجل مرة واحدة فقط 
 

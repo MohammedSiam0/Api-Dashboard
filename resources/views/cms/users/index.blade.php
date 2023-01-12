@@ -46,7 +46,7 @@
                 <td>
                   {{$user->email}}
                 </td>
-                <td> {{$user->city->name_en ?? null}} </td>
+                <td> {{$user->city->name_ar ?? null}} </td>
                  <td> {{$user->created_at}} </td>
                 <td>  {{$user->updated_at}}</td>
        

@@ -33,6 +33,7 @@ Route::middleware('auth:user-api')->group(function(){
     Route::apiResource('cities',CityController::class);
 
 });
+ 
 Route::prefix('auth')->middleware('auth:user-api')->group(function(){
     Route::get('logout',[ApiAuthController::class,'logout' ]);
 });

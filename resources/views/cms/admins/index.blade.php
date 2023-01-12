@@ -47,7 +47,7 @@
                   {{$admin->email}}
                 </td> 
                 <td>
-                  {{$admin->roles[0]->name}}
+                  {{$admin->roles[0]->name ?? null}} 
                 </td>
                   <td> {{$admin->created_at}} </td>
                 <td>  {{$admin->updated_at}}</td>
