@@ -44,7 +44,7 @@ class CityPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function create($user)
+    public function create($user)   
     {
         $guard =auth('admin')->check() ? 'admin' : 'web';
         return auth($guard)->user()->hasPermissionTo('Create-City') ? $this->allow() :$this->deny();
@@ -58,7 +58,7 @@ class CityPolicy
      * @param  \App\Models\City  $city
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, City $city)
+    public function update()
     {
         $guard =auth('admin')->check() ? 'admin' : 'web';
         return auth($guard)->user()->hasPermissionTo('Update-City') ? $this->allow() :$this->deny();
@@ -72,7 +72,7 @@ class CityPolicy
      * @param  \App\Models\City  $city
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, City $city)
+    public function delete()
     {
         $guard =auth('admin')->check() ? 'admin' : 'web';
         return auth($guard)->user()->hasPermissionTo('Delete-City') ? $this->allow() :$this->deny();

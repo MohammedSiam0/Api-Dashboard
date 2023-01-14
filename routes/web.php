@@ -21,7 +21,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('cms.temp');
+     return view('cms.temp');
+   // return view('welcome');
 });
 //Route::view('/','cms.temp');
 
@@ -51,19 +52,23 @@ Route::prefix('cms/admin')->middleware('auth:web,admin')->group(function () {
  });
                         // guest بخليها توجه المستخدم الي مسجل دخول ما يرجع غير على الصفحة الرئيسية مش ع تسجيل دخول 
 //  Route::prefix('cms/admin')->middleware('guest:web,admin')->group(function(){
-// Route::get('login',[AuthController::class,'showLogin'])->name('cms.login');
+//  Route::get('login',[AuthController::class,'showLogin'])->name('cms.login');
 //  Route::post('login',[AuthController::class,'login']);
 //  });
+
 Route::prefix('cms')->middleware('guest:web,admin')->group(function(){
-    Route::get('{guard}/login',[AuthController::class,'showLogin']);
-    Route::get('web/login',[AuthController::class,'showLogin'])->name('cms.login');
+   // Route::get('{guard}/login',[AuthController::class,'showLogin']);
+    Route::get('{guard}/login',[AuthController::class,'showLogin'])->name('cms.login');
      Route::post('login',[AuthController::class,'login']);
-     });
-     
+     Route::get('{guard}/register',[AuthController::class,'showRegister']);
+     Route::Post('register',[AuthController::class,'register']);
+      });
+
  Route::prefix('cms/admin')->middleware('auth:web,admin')->group(function(){
                                    // حستدعي زر تسجيل الخروج عن طريق route('cms.logout')
 Route::get('logout',[AuthController::class,'logout'])->name('cms.logout');
  });
+ 
  
 //  Route::prefix('cms/admin')->group(function(){  
 //   // النيم الي موجود هذا علشان احطه في صفحة علشان تمنع اي حدا يفوت لوحة التحكم اذا مش مسجل دخول وتوجه هنا مسارها كتالي ا

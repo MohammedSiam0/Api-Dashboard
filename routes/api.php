@@ -21,10 +21,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::prefix('auth')->group(function(){
-    Route::post('login',[ApiAuthController::class,'loginPersonal' ]);
+    Route::post('login',[ApiAuthController::class,'loginPersonal' ]);    
     // لتشغيل هذا الرابط بالشكل المناسب يجب تشغيل المشروع على بروت مختلف عن البروت الي في
-    Route::post('login-pgct',[ApiAuthController::class,'loginPGCT' ]);
-
+    Route::post('login-pgct',[ApiAuthController::class,'loginPGCT']);
+     Route::Post('register',[ApiAuthController::class,'register']);
 });
 Route::middleware('auth:user-api')->group(function(){
     // هذا لازم اشغل الكنترولر تبع ال api 

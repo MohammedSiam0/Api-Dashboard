@@ -16,7 +16,11 @@ class City extends Model
     }
 
     use HasFactory;
-
+    protected $fillable = [
+        'name_en',
+        'name_ar',
+        'active',
+    ];
     // علشان نتعامل معها في الapi  
     // انه مش كولم في الداتا بيز هاي تم الحاقها 
     // protected $appends =['active_stauts']; 

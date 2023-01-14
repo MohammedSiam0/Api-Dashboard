@@ -65,21 +65,42 @@ class UserController extends Controller
             // طريقة تحديد كم رقم تريد , موجودة في بوست مان تبع  سمارت ستور
           //  required|numeric|digits:9
         ]);
-        if(!$valedator->fails()){
-            $user =new User();
-            $user->name = $request->input('name');
-            $user->email = $request->input('email_address');
-            $user->password = Hash::make(12345);
-            $user->city_id = $request->input('city_id');
-            $isSaved = $user->save();
-    
-            return response()->json(
-                ['message' => $isSaved ? __('Created Successfully') : __('Create Failed!')],
-                $isSaved ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST,
-            );
-        }else{
-            return response()->json(['message'=>$valedator->getMessageBag()->first()],Response::HTTP_BAD_REQUEST);
-        }
+        if(auth('user-api')->check()){
+            if(!$valedator->fails()){
+                $user =new User();
+                $user->name = $request->input('name');
+                $user->email = $request->input('email_address');
+                $user->password = $request->input('password');
+                $user->city_id = $request->input('city_id');
+                 $user->save();
+         return response()->json([
+                'status' => true,
+                'message' => "User Created successfully!",
+                "data" => $user
+            ], 200);
+                
+            }
+
+           
+          }else {
+            if(!$valedator->fails()){
+                $user =new User();
+                $user->name = $request->input('name');
+                $user->email = $request->input('email_address');
+                $user->password = Hash::make(12345);
+                $user->city_id = $request->input('city_id');
+                $isSaved = $user->save();
+        
+                return response()->json(
+                    ['message' => $isSaved ? __('Created Successfully') : __('Create Failed!')],
+                    $isSaved ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST,
+                );
+            }else{
+                return response()->json(['message'=>$valedator->getMessageBag()->first()],Response::HTTP_BAD_REQUEST);
+            }
+          
+          }
+       
     }
 
     /**

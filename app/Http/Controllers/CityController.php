@@ -8,11 +8,11 @@ use Illuminate\Http\Request;
 class CityController extends Controller
 {
 
-    //   public function __construct(){
+       public function __construct(){
 
-    //     $this->authorizeResource(City::class,'city');
+         $this->authorizeResource(City::class,'city');
 
-    //   }
+      }
 
     /**
      * Display a listing of the resource.
@@ -71,8 +71,6 @@ class CityController extends Controller
      */
     public function store(Request $request)
     {
-      
-
         $request->validate([
                 'name_en' => 'required|string|min:3|max:50',
                 'name_ar' => 'required|string|min:3|max:50',
@@ -154,7 +152,7 @@ class CityController extends Controller
      */
     public function update(Request $request, City $city)
     {
-        $this->authorize('update',$city);
+      //  $this->authorize('update',$city);
         $request->validate([
             'name_en' => 'required|string|min:3|max:50',
             'name_ar' => 'required|string|min:3|max:50',
@@ -195,8 +193,26 @@ class CityController extends Controller
      */
     public function destroy(City $city)
     {
-        $this->authorize('delete',$city);
-         $isDeleted =$city->delete();
-         return redirect()->back();
-    }
+      
+        // $this->authorize('delete',$city);
+        // $isDeleted =$city->delete();
+        // return redirect()->back();
+        if(auth('user-api')->check()){
+            $isDeleted =$city->delete();
+             return [
+                 "status" => $isDeleted,
+                 "msg" => " Delete successfully"
+             ];
+         }else {
+           $this->authorize('delete',$city);
+           $isDeleted =$city->delete();
+         if($isDeleted){
+                return redirect()->back();
+         }else{
+             return redirect()->back();
+         }
+         }
+       }
+   
+ 
 }

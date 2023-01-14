@@ -47,6 +47,9 @@ class CityController extends Controller
             'message' => "City Created successfully!",
             "data" => $cities
         ], 200);
+
+
+        
     }
 
     /**

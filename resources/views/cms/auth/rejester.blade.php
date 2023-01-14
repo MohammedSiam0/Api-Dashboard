@@ -21,14 +21,33 @@
   <!-- /.login-logo -->
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
-      <a href="../../index2.html" class="h1"><b>Admin</b>LTE</a>
+      <a href="../../index2.html" class="h1"><b>Register</b></a>
     </div>
     <div class="card-body">
-      <p class="login-box-msg">Sign in to start your session {{$guard}}</p>
-
+ 
       <form  >
         <div class="input-group mb-3">
           <input type="email" class="form-control" placeholder="Email" id="email">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-envelope"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <select class="custom-select" id="city_id">
+            @foreach($cities as $city)
+              <option value="{{$city->id}}">{{$city->name_en}}</option>
+              @endforeach
+            
+            </select>          
+            <div class="input-group-append">
+          
+          </div>
+        </div>
+      
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="name" id="name">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -44,17 +63,10 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-8">
-            <div class="icheck-primary">
-              <input type="checkbox" id="remember">
-              <label for="remember">
-                Remember Me
-              </label>
-            </div>
-          </div>
+       
           <!-- /.col -->
-          <div class="col-4">
-            <button type="button" onclick="login()" class="btn btn-primary btn-block">Sign In</button>
+          <div class="col-12">
+            <button type="button" onclick="performRegister()" class="btn btn-primary btn-block">Register</button>
           </div>
           <!-- /.col -->
         </div>
@@ -62,10 +74,7 @@
 
  
 
-      <p class="mb-1">
-        <a href="{{ url('/cms/web/register') }}">New Acount Register</a>
-      </p>
-     
+       
     </div>
     <!-- /.card-body -->
   </div>
@@ -84,28 +93,29 @@
    
 {{-- <script src="{{asset('js/axios.js')}}"></script>   --}}
 <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+ 
 <script>
-  function login() {
-    // طريق ثانية لتمرير الايدي بس كل وحدة حسب واصل او لاء 
-  axios.post('/cms/login', {
-      email: document.getElementById('email').value,
-      password: document.getElementById('password').value,
-      remember: document.getElementById('remember').checked,
-      guard:'{{$guard}}',
-  })
-      .then(function (response) {
-          //2xx
-           console.log(response);
-          toastr.success(response.data.message);
-          // بعد الحفظ يرجعنى على صفحة معينة 
-          window.location.href = '/cms/admin/cities'
-      })
-      .catch(function (error) {
-          //4xx - 5xx
-          console.log(error.response.data.message);
-          toastr.error(error.response.data.message);
-      });
-}
+  function performRegister() {
+       axios.post('/cms/register', {
+           name: document.getElementById('name').value,
+           email_address: document.getElementById('email').value,
+           city_id: document.getElementById('city_id').value,
+           password: document.getElementById('password').value,
+           
+       })
+           .then(function (response) {
+               //2xx
+                console.log(response);
+               toastr.success(response.data.message);
+               // هاي علشان تخليني اعمل تفريغ للحقول عند نجاح العملية 
+               window.location.href = '/cms/web/login'
+           })
+           .catch(function (error) {
+               //4xx - 5xx
+               console.log(error.response.data.message);
+               toastr.error(error.response.data.message);
+           });
+   }
 </script>
 </body>
 

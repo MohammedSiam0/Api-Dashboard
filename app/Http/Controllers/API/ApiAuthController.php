@@ -19,7 +19,6 @@ class ApiAuthController extends Controller
 
     public function loginPersonal (Request $requset){
         $valedator  =Validator($requset->all(),[
-
             'email'=>'required|email|exists:users,email',
             'password'=>'required|string|min:3',
         ]);
@@ -48,7 +47,6 @@ class ApiAuthController extends Controller
     // الطريقة الثانية المختصة بعمل كل حساب من توكن جديد 
     public function loginPGCT (Request $requset){
         $valedator  =Validator($requset->all(),[
-
             'email'=>'required|email|exists:users,email',
             'password'=>'required|string|min:3',
         ]);
@@ -93,10 +91,41 @@ private function generatePgctToken(Request $request){
 }
 
 
+  public function register(Request $request){
+       
+        //
+        $valedator = Validator($request->all(),[
+            'name' => 'required|string|min:3|max:100',
+             'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:3|max:100',
+            'city_id' => 'required|numeric|exists:cities,id',
+            // طريقة تحديد كم رقم تريد , موجودة في بوست مان تبع  سمارت ستور
+          //  required|numeric|digits:9
+        ]);
+       
+            if(!$valedator->fails()){
+                $user =new User();
+                $user->name = $request->input('name');
+                $user->email = $request->input('email');
+                // الطريقة الصحيحة لحفظ الباسورد لانه لازم تكون مشفرة 
+                $user->password = Hash::make($request['password']);
+                $user->city_id = $request->input('city_id');
+                $isSaved = $user->save();
+        
+                return response()->json(
+                    ['message' => $isSaved ? __('Created Successfully') : __('Create Failed!')],
+                    $isSaved ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST,
+                );
+            }else{
+                return response()->json(['message'=>$valedator->getMessageBag()->first()],Response::HTTP_BAD_REQUEST);
+            }
+          
+          
+    }
 
 
 
-// دالة لتجعل المستخدم يسجل مرة واحدة فقط 
+// // دالة لتجعل المستخدم يسجل مرة واحدة فقط 
 
 public function revokeProviousTokens($userId ,$clientId = 1){
     DB::table('oauth_access_tokens')
