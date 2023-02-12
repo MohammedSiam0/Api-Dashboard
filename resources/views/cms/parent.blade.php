@@ -315,8 +315,96 @@ scratch. This page gets rid of all links and provides the needed markup only.
          
           </ul>
         </li>
+        
         @endcanany 
-
+        @canany(['Create-Product', 'Read-Products',])
+        <li class="nav-header">{{__('cms.products')}} </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-edit"></i>
+            <p>
+              {{__('cms.products')}}
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            @canany('Read-Products')
+            <li class="nav-item">
+              <a href="{{route('products.index')}}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>{{__('cms.index')}}</p>
+              </a>
+            </li>
+            @endcanany
+            @canany('Create-Product')
+            <li class="nav-item">
+              <a href="{{route('products.create')}}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p> {{__('cms.create')}}</p>
+              </a>
+            </li>
+            @endcanany
+         
+          </ul>
+        </li> 
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-edit"></i>
+            <p>
+              {{__('cms.subCategory')}}
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            @canany('Read-Products')
+            <li class="nav-item">
+              <a href="{{route('subcategories.index')}}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>{{__('cms.index')}}</p>
+              </a>
+            </li>
+            @endcanany
+            @canany('Create-Product')
+            <li class="nav-item">
+              <a href="{{route('subcategories.create')}}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p> {{__('cms.create')}}</p>
+              </a>
+            </li>
+            @endcanany
+         
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-edit"></i>
+            <p>
+              {{__('cms.category')}}
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            @canany('Read-Products')
+            <li class="nav-item">
+              <a href="{{route('categories.index')}}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>{{__('cms.index')}}</p>
+              </a>
+            </li>
+            @endcanany
+            @canany('Create-Product')
+            <li class="nav-item">
+              <a href="{{route('categories.create')}}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p> {{__('cms.create')}}</p>
+              </a>
+            </li>
+            @endcanany
+         
+          </ul>
+        </li>
+        @endcanany 
+       
         @canany(['Create-User', 'Read-Users','Create-Admin', 'Read-Admins'])
         <li class="nav-header">{{__('cms.humerus_resourcing')}} </li>
         <li class="nav-item">
@@ -359,7 +447,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </a>
           <ul class="nav nav-treeview">
             
-            @canany('Read-Admins')
+            @canany('Read-Admins')  
             <li class="nav-item">
               <a href="{{route('admins.index')}}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>

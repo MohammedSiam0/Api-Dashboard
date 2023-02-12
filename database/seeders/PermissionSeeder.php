@@ -43,6 +43,10 @@ class PermissionSeeder extends Seeder
        Permission::create(['name'=>'Update-Admin','guard_name'=>'admin']);
        Permission::create(['name'=>'Delete-Admin','guard_name'=>'admin']);
 
+       Permission::create(['name'=>'Create-Product','guard_name'=>'admin']);
+       Permission::create(['name'=>'Read-Products','guard_name'=>'admin']);
+       Permission::create(['name'=>'Update-Product','guard_name'=>'admin']);
+       Permission::create(['name'=>'Delete-Product','guard_name'=>'admin']);
         //***********************Users Permission***************/
 
             // ع  لى سبيل التمثيل بس حعطي اليوزر صلاحيتان

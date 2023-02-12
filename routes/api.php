@@ -1,7 +1,11 @@
 <?php
 
 use App\Http\Controllers\API\ApiAuthController;
+use App\Http\Controllers\API\ProductController as APIProductController;
 use App\Http\Controllers\CityController;
+use App\Http\Controllers\API\ProductController;
+use App\Http\Controllers\SubCategoryController;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-                        //sanctum
+                        //sanctum  هذا السطر ديفولتت 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -30,10 +34,27 @@ Route::middleware('auth:user-api')->group(function(){
     // هذا لازم اشغل الكنترولر تبع ال api 
  //   Route::apiResource('cities',CityController::class);
  //api هذا خلينا نعمل الكنترولر العادي كمان لل api
-    Route::apiResource('cities',CityController::class);
+     Route::apiResource('cities',CityController::class);
+     Route::apiResource('products',ProductController::class);
+     Route::apiResource('subcategories',SubCategoryController::class);
 
 });
  
 Route::prefix('auth')->middleware('auth:user-api')->group(function(){
     Route::get('logout',[ApiAuthController::class,'logout' ]);
 });
+ 
+
+
+
+// Route::get('unicef', function () {
+//     $data = Product::max('price');
+// return response()->json(['Price Data : ',$data]);
+//  });
+// Route::get('products', function () {
+//     Route::apiResource('products',ProductController::class);
+
+
+//  });
+
+

@@ -22,6 +22,9 @@ return [
 'cities' => 'Cities', 
 'users' => 'Users', 
 'admins' => 'Admins', 
+'products' => 'Products ', 
+'subCategory' => 'Sub Category', 
+'category' => 'Category', 
 
 // Menu 
 'contect_management' => 'Contect Management', 
@@ -45,6 +48,10 @@ return [
 'assign_permissions' =>  'Role Permission', 
 'assigned' =>  'Assigned', 
 'create_failed' =>  'Create Failed !', 
+'description' =>  'Description', 
+'price' =>  'Price', 
+'stock' =>  'Stock', 
+'status' =>  'Status', 
 // Botton
 'save' =>  ' Save', 
 

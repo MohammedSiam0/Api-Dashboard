@@ -2,11 +2,21 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\AgeChechMiddleware;
+use App\Models\Category;
+use App\Models\Image;
+use App\Models\Order;
+use App\Models\OrderProduct;
+use App\Models\Product;
+use App\Models\SubCategory;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,8 +31,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-     return view('cms.temp');
-   // return view('welcome');
+    //   return view('cms.temp');
+  return view('cms.parent');
 });
 //Route::view('/','cms.temp');
 
@@ -48,7 +58,11 @@ Route::prefix('cms/admin')->middleware('auth:web,admin')->group(function () {
     Route::resource('cities',CityController::class);
     Route::resource('users',UserController::class);
     Route::resource('permissions',PermissionController::class);
+    Route::resource('products',ProductController::class);
     Route::resource('roles',RoleController::class);
+    Route::resource('subcategories',SubCategoryController::class);
+    Route::resource('categories',CategoryController::class);
+
  });
                         // guest بخليها توجه المستخدم الي مسجل دخول ما يرجع غير على الصفحة الرئيسية مش ع تسجيل دخول 
 //  Route::prefix('cms/admin')->middleware('guest:web,admin')->group(function(){
@@ -57,7 +71,7 @@ Route::prefix('cms/admin')->middleware('auth:web,admin')->group(function () {
 //  });
 
 Route::prefix('cms')->middleware('guest:web,admin')->group(function(){
-   // Route::get('{guard}/login',[AuthController::class,'showLogin']);
+    //Route::get('admin/login',[AuthController::class,'showLogin'])->name('cms.login');
     Route::get('{guard}/login',[AuthController::class,'showLogin'])->name('cms.login');
      Route::post('login',[AuthController::class,'login']);
      Route::get('{guard}/register',[AuthController::class,'showRegister']);
@@ -98,3 +112,23 @@ Route::get('logout',[AuthController::class,'logout'])->name('cms.logout');
 //     });
 
 //  });
+
+
+
+//   تفعيل الفاكتوري 
+Route::get('create-data', function () {
+    set_time_limit(1000);
+    Category::factory(5)->create()->each(function ($category) {
+        $category->subCategories()->saveMany(SubCategory::factory(rand(2, 10))->make())->each(function ($subCategory) {
+            $subCategory->products()->saveMany(Product::factory(rand(2, 10))->make())->each(function ($product) {
+                $product->images()->saveMany(Image::factory(rand(2, 10))->make());
+            });
+        });
+     });
+
+    User::factory(5)->create()->each(function ($user) {
+        $user->orders()->saveMany(Order::factory(rand(2, 10))->make())->each(function ($order) {
+            $order->orderDetails()->saveMany(OrderProduct::factory(rand(2, 10))->make());
+        });
+    });
+});

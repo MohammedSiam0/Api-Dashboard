@@ -9,7 +9,10 @@ return [
 'update_users' => 'تعديل مستخدم', 
 
 'cities' => 'المدن', 
-'users' => 'مستخدمين', 
+'users' => 'مستخدمين',  
+'products' => 'منتاجات ', 
+'subCategory' => 'فئة فرعية', 
+'category' => 'فئة', 
 
 
 'contect_management' => 'إدارة المحتوى ', 

@@ -72,6 +72,23 @@ class User extends Authenticatable
      * @param  string  $password
      * @return bool
      */
+
+
+     public function orders()
+     {
+         return $this->hasMany(Order::class, 'user_id', 'id');
+     }
+ 
+     public function orderProducts()
+     {
+         return $this->hasManyThrough(OrderProduct::class, Order::class, 'user_id', 'order_id');
+     }
+ 
+     public function images()
+     {
+         return $this->morphMany(Image::class, 'object');
+     }
+
     public function validateForPassportPasswordGrant($password)
     {
         return Hash::check($password, $this->password);

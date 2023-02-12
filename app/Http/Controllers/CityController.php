@@ -203,6 +203,7 @@ class CityController extends Controller
                  "status" => $isDeleted,
                  "msg" => " Delete successfully"
              ];
+             
          }else {
            $this->authorize('delete',$city);
            $isDeleted =$city->delete();
